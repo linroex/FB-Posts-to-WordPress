@@ -1,4 +1,4 @@
-from json import encode
+from json import dump
 
 class Facebook_Post:
     def __init__(self, message, created_time, picture):
@@ -7,4 +7,4 @@ class Facebook_Post:
         self.picture = picture
     
     def __str__(self):
-        return encode(self)
+        return dump(self)

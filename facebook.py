@@ -18,6 +18,9 @@ class Facebook:
 
         return commands[method.lower()](self.get_url(path), data)
 
+    def next(self, path):
+        return requests.get(path).json()
+
     def get_api(self, path, data):
         return requests.get(path, data).json()
 
