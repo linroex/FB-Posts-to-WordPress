@@ -1,4 +1,5 @@
 from facebook import Facebook
+from custom_object import Facebook_Post
 from config import config
 
 def main():
