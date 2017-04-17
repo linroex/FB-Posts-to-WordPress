@@ -1,8 +1,10 @@
+from urllib.request import urlretrieve
+import json
+
 from facebook import Facebook
-from custom_object import Facebook_Post as Post
 from config import config
 
-def main():
+def get_all_posts():
     fb = Facebook(config['access_token'])
     posts = []
 
@@ -18,14 +20,32 @@ def main():
 
         for item in response['data']:
             if 'message' in item.keys():
+                id = str(len(posts))
+
                 if 'full_picture' in item.keys():
-                    posts.append(Post(item['message'], item['created_time'], item['full_picture']))
+                    urlretrieve(item['full_picture'], 'images/' + id + '.jpg')
+                    
+                    posts.append({
+                        'id': id,
+                        'message': item['message'],
+                        'created_time': item['created_time'],
+                        'full_picture': 'images/' + id + '.jpg'
+                    })
                 else:
-                    posts.append(Post(item['message'], item['created_time']))
+                    posts.append({
+                        'id': len(posts) - 1,
+                        'message': item['message'],
+                        'created_time': item['created_time'],
+                    })
                 print(len(posts))
-    
-    print(posts)
-        
+
+    return posts
+
+def main():
+    posts = get_all_posts()
+
+    with open('posts.json', 'w', encoding='utf8') as f:
+        f.write(json.dumps(posts))
 
 if __name__ == '__main__':
     main()

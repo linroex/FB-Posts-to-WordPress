@@ -6,5 +6,5 @@ class Facebook_Post:
         self.created_time = created_time
         self.picture = picture
     
-    def __str__(self):
-        return dump(self)
+    def __dict__(self):
+        return dict(self)
